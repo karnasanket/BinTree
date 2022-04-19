@@ -9,7 +9,7 @@
 // the last line of data so it acts like unix/linux.
 
 // presumably bintree.h includes nodedata.h so the include is not needed here
-#include "bintree.h"
+#include "Bintree.h"
 #include <fstream>
 #include <iostream>
 using namespace std;
