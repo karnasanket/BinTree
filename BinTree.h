@@ -1,6 +1,7 @@
 #pragma once 
 #include <iostream>
 #include "nodedata.h"
+#include <cassert>
 using namespace std;
 
 class BinTree 
@@ -15,14 +16,16 @@ class BinTree
 	    Node* root;	// root of the tree
 
         void inorderHelper(Node*) const;
-        void sideways(Node*, int)
+        void sideways(Node*, int) const;
         void deleteTree(Node*& other);
-        void assignHelper(Node* current, Node*& other);
-        bool equalityHelper(Node* first, Node* second);
+        void assignHelper(Node*& current, Node* other);
+        bool equalHelper(Node* first, Node* second)  const;
         bool insertion(Node*& current, NodeData* other);
-        bool retrieveHelper(Node*& newNode, const NodeData& current, NodeData*& other);
-        int getHeightHelper(const NodeData& current, Node* other) const;
-        int bstreeToArrayHelper(Node*, NodeData* []);
+        void retrieveHelper(Node* current, const NodeData& currData, NodeData*& other) const;
+        // int getHeightHelper(const NodeData& current, Node* other) const;
+        // int recursiveHeightHelper(Node* current) const;
+        // int bstreeToArrayHelper(Node* current, NodeData* arr[]) const;
+        // void arrayToBSTreeHelper(NodeData* arr[], int left, int right);
         
     public:
         BinTree();	// constructor
@@ -37,11 +40,14 @@ class BinTree
         bool operator!=(const BinTree &) const;
 
         bool insert(NodeData*);
-        bool retrieve(const NodeData&, NodeData*&) const;
+        bool retrieve(const NodeData& currData, NodeData*& check) const;
         void displaySideways() const;
-        int getHeight(const NodeData&) const;
-        void bstreeToArray(NodeData* []);
-        void arrayToBSTree(NodeData* []);
+        // int getHeight(const NodeData&) const;
+        // void bstreeToArray(NodeData* []);
+        // void arrayToBSTree(NodeData* []);
     
     friend ostream& operator<<(ostream& out, const BinTree& other);
-}
+};
+
+
+
