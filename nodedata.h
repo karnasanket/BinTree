@@ -1,3 +1,8 @@
+/*
+Name: Sanket Karna
+Class: CSS 343
+Header Class for nodedata, the pointers to the data kept in each node of the BST provided by Intructor
+*/
 #ifndef NODEDATA_H
 #define NODEDATA_H
 #include <string>
@@ -34,3 +39,5 @@ private:
 };
 
 #endif
+
+

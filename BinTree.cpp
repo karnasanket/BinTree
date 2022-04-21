@@ -1,3 +1,19 @@
+/*---------------------------------------------------BinTree.H--------------------------------------------------------
+Name: Sanket Karna
+Class: CSS 343
+Created: 04/14/2022
+Last Modified: 04/22/2022
+----------------------------------------------------------------------------------------------------------------------
+This file contains the implementation of the methods and fucntions that are defined in the header class of a BinTree.
+It includes the BinTree.h file, and the public method are right above the private helper method for each fucntion for easy
+visibility.
+The fucntions of BinTree are: To make a tree out of the values read from a file
+Being able to delete the tree, make a deep copy of the tree, see if two trees are equal or unequal, find a value in the tree
+display the tree normally, and sideways, converts the tree to an Array and make a tree out of the contents in an array
+-----------------------------------------------------------------------------------------------------------------------
+This class utizes the nodedata class, which conatins the pointers to the data that are stored in each node of the BST
+-----------------------------------------------------------------------------------------------------------------------
+*/
 #include "BinTree.h"
 using namespace std;
 
@@ -198,7 +214,8 @@ bool BinTree::insertion(Node*& lhs, NodeData* data)
     {
         lhs = new Node; // dynamically alloacte memory
         lhs->data = data; // add the data 
-        lhs->left = lhs->right = nullptr; // set the left and right to nullptr
+        lhs->left = nullptr;
+        lhs->right = nullptr; // set the left and right to nullptr
     }
     else if(*data < *lhs->data) // if the value inserted is smaller
     {
@@ -252,18 +269,147 @@ void BinTree::retrieveHelper(Node* current, const NodeData& currData, NodeData*&
         check = nullptr;
 
     }
-    else if(*current->data == currData)
+    else if(*current->data == currData) // checks the data of the root 
     {
-        check = current->data;
+        check = current->data; // if the data matches, check = root
     }
-    else if(*current->data < currData)
+    else if(*current->data < currData) // if it is bigger 
     {
-        retrieveHelper(current->right, currData, check);
+        retrieveHelper(current->right, currData, check); // check right subtree
     }
-    else if(*current->data > currData)
+    else if(*current->data > currData) // if it is smaller
     {
-        retrieveHelper(current->left, currData, check);
+        retrieveHelper(current->left, currData, check); // check left subtree
     }
+}
+
+//------------------------- getHeight ---------------------------------
+// Fucntion that returns the height of the inputted node in the tree by using the helper function
+//--------------------------------------------------------------------------
+
+int BinTree::getHeight(const NodeData& currNode) const
+{
+    return getHeightHelper(this->root, currNode); // calls the helper method
+}
+
+//------------------------- getHeightHelper ---------------------------------
+// This method (is recursive) checks the node to see if the value is in the tree, and when
+// found it calls the counter method that counts the height 
+//--------------------------------------------------------------------------
+
+int BinTree::getHeightHelper(Node* curr, const NodeData& currNode) const
+{
+    if(curr == nullptr) // check to see if the tree is empty
+    {
+        return 0; // if it is height is 0
+    }
+    else if(*curr->data == currNode) // if the NodeData is found
+    {
+        return heighCounter(curr); // call the heightCounter method to count the height
+    }
+    else 
+    {
+        int leftSubTree = getHeightHelper(curr->left, currNode); // otherwise go left subtree to check
+        int rightSubTree = getHeightHelper(curr->right, currNode); // and also right subtree to check
+
+        return max(leftSubTree, rightSubTree); // if they are on both sides, return the higher value
+    }
+
+}
+
+//------------------------- heightCounter ---------------------------------
+// This recursive method to count the height of the node in the tree, either left or right
+// and returns the higher value
+//--------------------------------------------------------------------------
+
+int BinTree::heighCounter(Node* current) const
+{
+    if(current == nullptr) // if the tree is empty
+    {
+        return 0; // height is 0
+    }
+    else if(current->left == nullptr && current->right == nullptr) // if the root is the correct and only node
+    {
+        return 1; // height is 1
+    }
+    else 
+    {
+        return 1 + max(heighCounter(current->left), heighCounter(current->right)); // 1 + the amount of time it has to go down left or right, depending on which is bigger
+    }
+    return 0;
+}
+
+//------------------------- bstreeToArray ---------------------------------
+// This method calls on a helper function to transfer the contents of a BST to array
+//--------------------------------------------------------------------------
+
+void BinTree::bstreeToArray(NodeData* arr[])
+{
+    bstreeToArrayHelper(this->root, arr); // calls the helper function
+    this->makeEmpty(); // clears the BST
+}
+
+//------------------------- bstreeToArrayHelper ---------------------------------
+// Helper method that transfers the contents of a BST to an array
+//--------------------------------------------------------------------------
+
+int BinTree::bstreeToArrayHelper(Node* current, NodeData* arr[]) const
+{
+    if(current == nullptr) // if the root is empty
+    {
+        return 0;
+    }
+    int leftSubTree = bstreeToArrayHelper(current->left, arr); // traverse left to fill the array
+
+    NodeData* temp; // temp NodeData
+    temp = current->data; // to store the left most value of the tree
+    current->data = nullptr; // set the value to null
+    *(arr + leftSubTree) = temp; // set the value of the array to the postion of the node that it is at currently
+    temp = nullptr; // set temp to nullptr
+
+    int rightSubTree = bstreeToArrayHelper(current->right, arr + leftSubTree + 1); // traverse right
+
+    return leftSubTree + rightSubTree + 1; // return the postion of the node
+}
+
+//------------------------- arrayToBSTree ---------------------------------
+// This method calls on a helper function to transfer the contents of a array to BST
+//--------------------------------------------------------------------------
+
+void BinTree::arrayToBSTree(NodeData* arr[])
+{
+    this->makeEmpty(); // clear the current tree
+
+    int len = 0; // length of the array 
+
+    while(arr[len] !=  nullptr) // while the array is not empty
+    {
+        len++; // get the length
+    }
+
+    arrayToBSTreeHelper(arr, 0, len - 1); // call the helper fucntion to fill the BST with arr of size 0 to len-1
+
+}
+
+//------------------------- arrayToBSTreeHelper ---------------------------------
+// Helper method that transfers the contents of a array to an BST
+//--------------------------------------------------------------------------
+
+void BinTree::arrayToBSTreeHelper(NodeData* arr[], int left, int right)
+{
+    if(left > right) // if the left index is greater then the right index, then tree is null
+    {
+        return;
+    }
+    int middle = (left + right) / 2; // mid the middle index
+
+    NodeData* temp; // temp NodeData
+    temp = arr[middle]; // for the middle value of the  array
+    arr[middle] = nullptr; // once that is use, set the mid to null
+
+    insert(temp); // insert the middle value into the tree
+    arrayToBSTreeHelper(arr, left, middle - 1); // insert the values to the left of the middle
+    arrayToBSTreeHelper(arr, middle + 1, right); // insert the value to the right of the middle
 }
 
 //------------------------- displaySideways ---------------------------------
@@ -294,5 +440,3 @@ void BinTree::sideways(Node* current, int level) const {
 		sideways(current->left, level);
 	}
 }
-
-

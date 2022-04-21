@@ -63,12 +63,12 @@ int main() {
 		cout << "Retrieve --> sss:  " << (found ? "found" : "not found") << endl;
 
 		// test getHeight 
-		// cout << "Height    --> and:  " << T.getHeight(andND) << endl;
-		// cout << "Height    --> not:  " << T.getHeight(notND) << endl;
-		// cout << "Height    --> sss:  " << T.getHeight(sssND) << endl;
-		// cout << "Height    --> tttt:  " << T.getHeight(ttttND) << endl;
-		// cout << "Height    --> ooo:  " << T.getHeight(oooND) << endl;
-		// cout << "Height    --> y:  " << T.getHeight(yND) << endl;
+		cout << "Height    --> and:  " << T.getHeight(andND) << endl;
+		cout << "Height    --> not:  " << T.getHeight(notND) << endl;
+		cout << "Height    --> sss:  " << T.getHeight(sssND) << endl;
+		cout << "Height    --> tttt:  " << T.getHeight(ttttND) << endl;
+		cout << "Height    --> ooo:  " << T.getHeight(oooND) << endl;
+		cout << "Height    --> y:  " << T.getHeight(yND) << endl;
 
 		// test ==, and != 
 		T2 = T;
@@ -78,8 +78,8 @@ int main() {
 		dup = T;
 
 		// somewhat test bstreeToArray and arrayToBSTree
-		// T.bstreeToArray(ndArray);
-		// T.arrayToBSTree(ndArray);
+		T.bstreeToArray(ndArray);
+		T.arrayToBSTree(ndArray);
 		T.displaySideways();
 
 		T.makeEmpty();                  // empty out the tree
