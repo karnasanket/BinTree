@@ -216,21 +216,22 @@ bool BinTree::insertion(Node*& lhs, NodeData* data)
         lhs->data = data; // add the data 
         lhs->left = nullptr;
         lhs->right = nullptr; // set the left and right to nullptr
-    }
-    else if(*data < *lhs->data) // if the value inserted is smaller
-    {
-        insertion(lhs->left, data); // goes to the left
-    }
-    else if(*data > *lhs->data) // if the value inserted is bigger
-    {
-        insertion(lhs->right, data); // goes to the right
-    }
-    else 
-    {
-        return false; // if the value has already been inserted, returns back
+
+        return true;
     }
 
-    return true; // new value has been inserted 
+    if(*data != *lhs->data)
+    {
+        if(*data < *lhs->data)
+        {
+            return insertion(lhs->left, data);
+        }
+        if(*data > *lhs->data)
+        {
+            return insertion(lhs->right, data);
+        }
+    }
+    return false;    
 }
 //------------------------- retrieve ---------------------------------
 // Checks if the NodeData is in the tree by using a helper function
