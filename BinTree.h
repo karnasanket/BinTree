@@ -31,17 +31,17 @@ class BinTree
 	    };
 	    Node* root;	// root of the tree
 
-        void inorderHelper(Node*) const;
-        void sideways(Node*, int) const;
-        void deleteTree(Node*& other);
-        void assignHelper(Node*& current, Node* other);
-        bool equalHelper(Node* first, Node* second)  const;
-        bool insertion(Node*& current, NodeData* other);
-        void retrieveHelper(Node* current, const NodeData& currData, NodeData*& other) const;
-        int getHeightHelper(Node* other, const NodeData& current) const;
-        int heighCounter(Node* current) const;
-        int bstreeToArrayHelper(Node* current, NodeData* arr[]) const;
-        void arrayToBSTreeHelper(NodeData* arr[], int left, int right);
+        void inorderHelper(Node*) const; // cout<< overload helper
+        void sideways(Node*, int) const; // display sideways helper
+        void deleteTree(Node*& other); // destructor/make empty helper
+        void assignHelper(Node*& current, Node* other); // assignment operator helper
+        bool equalHelper(Node* first, Node* second)  const; // equality/inequality helper
+        bool insertion(Node*& current, NodeData* other); // insert helper
+        void retrieveHelper(Node* current, const NodeData& currData, NodeData*& other) const; // retrive helper
+        int getHeightHelper(Node* other, const NodeData& current) const; // get height helper
+        int heighCounter(Node* current) const; // get height helper's helper
+        int bstreeToArrayHelper(Node* current, NodeData* arr[]) const; // tree to array helper
+        void arrayToBSTreeHelper(NodeData* arr[], int left, int right); // array to tree helper
         
     public:
         BinTree();	// constructor
@@ -51,16 +51,16 @@ class BinTree
         bool isEmpty() const; // true if tree is empty, otherwise false
         void makeEmpty(); // make the tree empty so isEmpty returns true
 
-        BinTree& operator=(const BinTree &);
-        bool operator==(const BinTree &) const;
-        bool operator!=(const BinTree &) const;
+        BinTree& operator=(const BinTree &); // assignment operator
+        bool operator==(const BinTree &) const; // equality operator
+        bool operator!=(const BinTree &) const; // inequality operator
 
-        bool insert(NodeData*);
-        bool retrieve(const NodeData& currData, NodeData*& check) const;
-        void displaySideways() const;
-        int getHeight(const NodeData&) const;
-        void bstreeToArray(NodeData* arr[]);
-        void arrayToBSTree(NodeData* arr[]);
+        bool insert(NodeData*); // insert method
+        bool retrieve(const NodeData& currData, NodeData*& check) const; // to retieve an item method
+        void displaySideways() const; // dispplay sideways method 
+        int getHeight(const NodeData&) const; // get height of the tree method
+        void bstreeToArray(NodeData* arr[]); // convert tree to array method
+        void arrayToBSTree(NodeData* arr[]); // converts array to tree method
     
-    friend ostream& operator<<(ostream& out, const BinTree& other);
+    friend ostream& operator<<(ostream& out, const BinTree& other); // operator overload for cout<<
 };
